@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 
 @RequestMapping("/accounts")  // http://localhost:8083/accounts
 @RestController
@@ -21,11 +23,12 @@ public class AccountController {
         return ResponseEntity.ok(newAccount);
     }
     @PostMapping("/login")
-    public ResponseEntity<Account> login(@RequestParam String user, @RequestParam String pass) {
+    public ResponseEntity<Account> login(@RequestParam String user, @RequestParam String pass,HttpSession session) {
         System.out.println("login");
         Account account = accountService.findByUser(user);
         if (account != null && account.getPass().equals(pass)) {
             account.setPass("");
+            session.setAttribute("uID", account.getuID());
             return ResponseEntity.ok(account);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
