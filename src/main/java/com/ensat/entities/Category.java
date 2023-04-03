@@ -14,11 +14,11 @@ import javax.persistence.Id;
 public class Category {
     @Id
     private Integer cID ;
-    private  Long cname;
+    private  String cname;
 
     public Category() {}
 
-    public Category(Integer cID, Long cname) {
+    public Category(Integer cID, String cname) {
         this.cID = cID;
         this.cname = cname;
     }
@@ -31,11 +31,12 @@ public class Category {
         this.cID = cID;
     }
 
-    public Long getCname() {
+    public String getCname() {
         return cname;
     }
 
-    public void setCname(Long cname) {
+    public void setCname(String cname) {
         this.cname = cname;
     }
+
 }

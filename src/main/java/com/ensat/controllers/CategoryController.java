@@ -8,17 +8,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+@RequestMapping("/categories")  // http://localhost:8083/categories
 @RestController
-@RequestMapping("/categories")
 @CrossOrigin("*")
 public class CategoryController {
     @Autowired
  private CategoryService service ;
-    @GetMapping("")
-    public List<Category> list() {
-         return  service.listAll();
+    @GetMapping("/all")
+    public ResponseEntity<List<Category>> list() {
+        return new ResponseEntity<>(service.listAll(), HttpStatus.OK);
     }
-    @GetMapping("/{cID}")
+    @GetMapping("/get/{cID}")
     public ResponseEntity<Category> get(@PathVariable Integer cID) {
         try {
              Category category = service.get(cID);
@@ -28,7 +28,7 @@ public class CategoryController {
         }
 
     }
-    @PostMapping("")
+    @PostMapping("/add")
     public  void add(@RequestBody Category category ) {
         service.save(category) ;
     }
@@ -44,7 +44,7 @@ public class CategoryController {
             return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/{cID}")
+    @DeleteMapping("/delete/{cID}")
     public  void delete(@PathVariable Integer cID) {
         service.delete(cID);
     }
