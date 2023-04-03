@@ -1,6 +1,9 @@
 package com.ensat.services;
 
+import com.ensat.Exception.ResourceNotFoundException;
+import com.ensat.entities.Category;
 import com.ensat.entities.Product;
+import com.ensat.repositories.CategoryRepository;
 import com.ensat.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,13 @@ public class ProductService {
         return  repo.findById(pID).orElse(null);
     }
     public void  delete ( Integer pID) {
+        Product byId = repo.findById(pID).orElseThrow(()->new ResourceNotFoundException(+pID+"from this product id product not found"));
         repo.deleteById(pID);
     }
+
+    public List<Product> findByCategoryId(Integer cID) {
+        return repo.findBycID(cID);
+    }
+
+
 }

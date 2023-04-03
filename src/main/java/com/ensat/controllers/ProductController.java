@@ -34,11 +34,11 @@ public class  ProductController {
       }
 
     }
-    @PostMapping("")
+    @PostMapping("/add")
     public  void add(@RequestBody Product product ) {
         productService.save(product) ;
     }
-    @PutMapping("/{pID}")
+    @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody Product product,
                                     @PathVariable Integer pID) {
         try {
@@ -50,16 +50,21 @@ public class  ProductController {
             return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/{pID}")
+    @DeleteMapping("/delete")
     public  void delete(@PathVariable Integer pID) {
         productService.delete(pID);
     }
-    // controller không gọi repository :)) fix lại nha, lấy service mà gọi
+
     @Autowired
     private ProductRepository productRepository;
-    @GetMapping("/search")
+    @GetMapping("/search") // http://localhost:8083/products/search?name=..
     public ResponseEntity<List<Product>> searchProductsByName(@RequestParam String name) {
         List<Product> products = productRepository.findByNameContainingIgnoreCase(name);
         return ResponseEntity.ok(products);
     }
-}
+    @GetMapping("/category/{cID}")
+    public List<Product> findByCategoryId(@PathVariable Integer cID) {
+        return productService.findByCategoryId(cID);
+    }
+    }
+

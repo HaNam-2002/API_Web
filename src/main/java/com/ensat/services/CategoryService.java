@@ -12,17 +12,17 @@ import java.util.List;
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository repo;
+    private CategoryRepository catRepo;
     public List<Category> listAll() {
-        return  repo.findAll();
+        return  catRepo.findAll();
     }
     public void  save (Category category) {
-        repo.save(category);
+        catRepo.save(category);
     }
-    public  Category get(Long cID) {
-        return  repo.findById(cID) .get();
+    public  Category get(Integer cID) {
+        return  catRepo.findById(cID) .get();
     }
-    public void  delete ( Long cID) {
-        repo.deleteById(cID);
+    public void  delete ( Integer cID) {
+        catRepo.deleteById(cID);
     }
 }

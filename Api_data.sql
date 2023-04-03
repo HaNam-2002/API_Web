@@ -1,17 +1,20 @@
 CREATE DATABASE SELLPHONE;
 USE SELLPHONE;
 
+
+CREATE TABLE Role (
+rID INT  PRIMARY KEY,
+roleName VARCHAR(255) NOT NULL
+);
+
 CREATE TABLE Account(
 uID INT AUTO_INCREMENT PRIMARY KEY,
 `user` VARCHAR(255) NULL,
 pass VARCHAR(255) NULL,
 phone INT NULL,
-address VARCHAR(255) NULL
-);
-
-CREATE TABLE Role (
-rID INT  PRIMARY KEY,
-roleName VARCHAR(255) NOT NULL
+address VARCHAR(255) NULL,
+rID INT NOT NULL ,
+FOREIGN KEY (rID) REFERENCES Role(rID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -32,8 +35,6 @@ uID INT NULL,
 FOREIGN KEY (uID) REFERENCES Account(uID) ON DELETE CASCADE ON UPDATE CASCADE,
 FOREIGN KEY (cID) REFERENCES Category(cID) ON DELETE CASCADE ON UPDATE CASCADE
 );
-SET FOREIGN_KEY_CHECKS=0;
-SET FOREIGN_KEY_CHECKS=1;
 
 CREATE TABLE Cart(
     uID INT NOT NULL,
@@ -46,17 +47,20 @@ CREATE TABLE Cart(
 );
 
 
+INSERT INTO Role (rID, roleName) VALUES 
+(1,'admin'),
+(2,'guest');
 
-INSERT INTO Account (`user`, pass ,phone,address ) VALUES 
-('Nam',  1, null , null),
-('Sell1' ,  0, 0931832732, '2 Nguyễn Lương Bằng , Liên Chiểu , Đà Nẵng'), 
-('Sell2' ,  0, 0314283732, '1 Hàm Nghi ,  Cẩm Lê , Đà Nẵng'), 
-('Khach1',  0, 0931832732, '187 Nguyễn Lương Bằng , Liên Chiểu , Đà Nẵng'), 
-('Khach2',  0, 0231832732, '17 Hải Phòng , Hải Châu , Đà Nẵng'), 
-('Khach3',  0, 0345673231, '154 Đê La Thành , Ba Đình , Hà Nội'), 
-('Khach4',  0, 0324327323, '99 Thế Lữ  , Sơn Trà , Đà Nẵng'), 
-('Khach5',  0, 0124573234, '99 Thế Lữ  , Sơn Trà , Đà Nẵng'), 
-('Khach6',  0, 0434131297, '100 nguyễn chí thanh  , Hải Châu , Đà Nẵng');
+INSERT INTO Account (`user`, pass ,phone,address, rID) VALUES 
+('Nam',  1, null , null,1),
+('Minh' ,  0, 0931832732, '2 Nguyễn Lương Bằng , Liên Chiểu , Đà Nẵng',2), 
+('Vy' ,  0, 0314283732, '1 Hàm Nghi ,  Cẩm Lê , Đà Nẵng',2), 
+('Khach1',  0, 0931832732, '187 Nguyễn Lương Bằng , Liên Chiểu , Đà Nẵng',2), 
+('Khach2',  0, 0231832732, '17 Hải Phòng , Hải Châu , Đà Nẵng',2), 
+('Khach3',  0, 0345673231, '154 Đê La Thành , Ba Đình , Hà Nội',2), 
+('Khach4',  0, 0324327323, '99 Thế Lữ  , Sơn Trà , Đà Nẵng',2), 
+('Khach5',  0, 0124573234, '99 Thế Lữ  , Sơn Trà , Đà Nẵng',2), 
+('Khach6',  0, 0434131297, '100 nguyễn chí thanh  , Hải Châu , Đà Nẵng',2);
 
 INSERT INTO Category (cID, cname) VALUES 
 (1, 'IPHONE'), 
@@ -64,6 +68,11 @@ INSERT INTO Category (cID, cname) VALUES
 (3, 'OPPO'), 
 (4, 'XIAOMI'), 
 (5, 'PHỤ KIỆN');
+
+
+
+SET FOREIGN_KEY_CHECKS=0;
+SET FOREIGN_KEY_CHECKS=1;
 
 
 INSERT INTO product (name, image, price, title, description, cID, uID) VALUES

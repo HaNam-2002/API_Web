@@ -1,10 +1,10 @@
 package com.ensat.repositories;
 
-import com.ensat.entities.Category;
+import com.ensat.entities.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CategoryRepository  extends JpaRepository<Category, Integer> {
+public interface RoleRepository extends JpaRepository<Role,Integer> {
 
 }

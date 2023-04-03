@@ -19,7 +19,7 @@ public class CategoryController {
          return  service.listAll();
     }
     @GetMapping("/{cID}")
-    public ResponseEntity<Category> get(@PathVariable Long cID) {
+    public ResponseEntity<Category> get(@PathVariable Integer cID) {
         try {
              Category category = service.get(cID);
             return  new ResponseEntity<Category>(category, HttpStatus.OK);
@@ -34,7 +34,7 @@ public class CategoryController {
     }
     @PutMapping("/{cID}")
     public ResponseEntity<?> update(@RequestBody Category category,
-                                    @PathVariable Long cID) {
+                                    @PathVariable Integer cID) {
         try {
             Category exitCategory = service.get(cID);
             service.save(category);
@@ -45,8 +45,12 @@ public class CategoryController {
         }
     }
     @DeleteMapping("/{cID}")
-    public  void delete(@PathVariable Long cID) {
+    public  void delete(@PathVariable Integer cID) {
         service.delete(cID);
+    }
+
+    public ResponseEntity<List<Product>>getProductbyCategory(@PathVariable Integer cID) {
+        return null;
     }
 }
 

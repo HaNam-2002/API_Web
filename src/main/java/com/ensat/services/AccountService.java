@@ -13,4 +13,16 @@ public class AccountService {
     public Account findByUser(String user) {
         return accountRepository.findByUser(user);
     }
+    public boolean changePassword(Account account, String oldPassword, String newPassword) {
+        if (account.getPass().equals(oldPassword)) {
+            account.setPass(newPassword);
+            accountRepository.save(account);
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public Account findById(Integer uID) {
+        return accountRepository.findById(uID).orElse(null);
+    }
 }
