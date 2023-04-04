@@ -1,7 +1,10 @@
 package com.ensat.controllers;
 
 import com.ensat.entities.Account;
+import com.ensat.entities.Category;
 import com.ensat.entities.PasswordChangeRequest;
+import com.ensat.entities.Product;
+import com.ensat.payload.request.LoginRequest;
 import com.ensat.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @RequestMapping("/accounts")  // http://localhost:8083/accounts
@@ -17,35 +21,74 @@ import javax.servlet.http.HttpSession;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+    @GetMapping("/all")
+    public ResponseEntity<List<Account>> list() {
+        return new ResponseEntity<>(accountService.listAll(), HttpStatus.OK);
+    }
+    @GetMapping("/get/{uID}")
+    public ResponseEntity<Account> get(@PathVariable Integer uID) {
+        try {
+            Account account= accountService.get(uID);
+            return  new ResponseEntity<Account>(account, HttpStatus.OK);
+        } catch (NoSuchFieldError e) {
+            return  new  ResponseEntity<Account>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+    @PostMapping("/add")
+    public  void add(@RequestBody Account account ) {
+        accountService.save(account) ;
+    }
+    @PutMapping("/{uID}")
+    public ResponseEntity<?> update(@RequestBody Account account,
+                                    @PathVariable Integer uID) {
+        try {
+            Account exitCategory = accountService.get(uID);
+            accountService.save(account);
+            return new ResponseEntity<Product>(HttpStatus.OK);
+        }
+        catch (NoSuchFieldError e) {
+            return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/delete/{uID}")
+    public  void delete(@PathVariable Integer uID) {
+        accountService.delete(uID);
+    }
         @PostMapping("/register")
-    public ResponseEntity<Account> register(@RequestBody Account account) {
+    public ResponseEntity<Account> register(@RequestBody() Account account) {
         Account newAccount = accountService.createAccount(account);
         return ResponseEntity.ok(newAccount);
     }
     @PostMapping("/login")
-    public ResponseEntity<Account> login(@RequestParam String user, @RequestParam String pass,HttpSession session) {
-        System.out.println("login");
-        Account account = accountService.findByUser(user);
-        if (account != null && account.getPass().equals(pass)) {
+    public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) {
+        System.out.println(loginRequest);
+        Account account = accountService.findByUser(loginRequest.getUser());
+        System.out.println(account);
+        if (account != null && account.getPass().equals(loginRequest.getPass())) {
             account.setPass("");
-            session.setAttribute("uID", account.getuID());
             return ResponseEntity.ok(account);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-    @PutMapping("/changePassword/{uID}")
-    public ResponseEntity<?> changePassword(@PathVariable Integer uID, @RequestBody PasswordChangeRequest request) {
-        Account account = accountService.findById(uID);
-        if (account != null) {
-            boolean isChanged = accountService.changePassword(account, request.getOldPassword(), request.getNewPassword());
-            if (isChanged) {
-                return ResponseEntity.ok("Password changed successfully.");
+    @PutMapping("/changePassword/{uID}") // {uID} xài PathVariable
+    public ResponseEntity<?> changePassword(@PathVariable() Integer uID, @RequestBody PasswordChangeRequest request) {
+        System.out.println(uID);
+        if (uID != null) {
+            Account account = accountService.findById(uID);
+            if (account != null) {
+                boolean isChanged = accountService.changePassword(account, request.getOldPassword(), request.getNewPassword());
+                if (isChanged) {
+                    return ResponseEntity.ok("Password changed successfully.");
+                } else {
+                    return ResponseEntity.badRequest().body("Incorrect old password.");
+                }
             } else {
-                return ResponseEntity.badRequest().body("Incorrect old password.");
+                return ResponseEntity.notFound().build();
             }
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Session expired or not logged in.");
         }
     }
 }

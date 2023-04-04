@@ -13,7 +13,7 @@ import javax.persistence.Id;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long uID;
+    private Integer uID;
 
     private String user;
 
@@ -31,11 +31,11 @@ public class Account {
         this.address = address;
     }
 
-    public Long getuID() {
+    public Integer getuID() {
         return uID;
     }
 
-    public void setuID(Long uID) {
+    public void setuID(Integer uID) {
         this.uID = uID;
     }
 

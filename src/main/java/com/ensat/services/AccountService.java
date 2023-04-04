@@ -1,12 +1,30 @@
 package com.ensat.services;
 import com.ensat.entities.Account;
+import com.ensat.entities.Category;
 import com.ensat.repositories.AccountRepository;
+import com.ensat.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
 @Service
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
+
+    public List<Account> listAll() {
+        return  accountRepository.findAll();
+    }
+    public void  save (Account account) {
+        accountRepository.save(account);
+    }
+    public  Account get(Integer uID) {
+        return  accountRepository.findById(uID) .get();
+    }
+    public void  delete ( Integer uID) {
+        accountRepository.deleteById(uID);
+    }
     public Account createAccount(Account account) {
         return accountRepository.save(account);
     }
