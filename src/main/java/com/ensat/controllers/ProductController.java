@@ -66,6 +66,5 @@ public class  ProductController {
     public List<Product> findByCategoryId(@PathVariable Integer cID) {
         return productService.findByCategoryId(cID);
     }
-
     }
 

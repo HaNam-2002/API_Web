@@ -1,9 +1,7 @@
 package com.ensat.entities;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -30,6 +28,8 @@ public class Product {
     private Integer uID;
 
     public  Product() {}
+
+
 
     public Product(Integer pID, String name, String image, BigDecimal price, String title, String description, Integer cID, Integer uID) {
         this.pID = pID;

@@ -57,8 +57,12 @@ public class AccountController {
     }
         @PostMapping("/register")
     public ResponseEntity<Account> register(@RequestBody() Account account) {
-        Account newAccount = accountService.createAccount(account);
-        return ResponseEntity.ok(newAccount);
+            try {
+                Account newAccount = accountService.createAccount(account);
+                return ResponseEntity.ok(newAccount);
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
     }
     @PostMapping("/login")
     public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) {

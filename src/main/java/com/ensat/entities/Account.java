@@ -2,10 +2,8 @@ package com.ensat.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -22,6 +20,17 @@ public class Account {
     private Integer phone;
 
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "rID")
+    private Role role;
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public Role getRole() {
+        return role;
+    }
 
     public  Account() {}
     public Account(String user, String pass, Integer phone, String address) {

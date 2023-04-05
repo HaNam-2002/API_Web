@@ -1,10 +1,13 @@
 package com.ensat.services;
 import com.ensat.entities.Account;
 import com.ensat.entities.Category;
+import com.ensat.entities.Role;
 import com.ensat.repositories.AccountRepository;
 import com.ensat.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -26,7 +29,16 @@ public class AccountService {
         accountRepository.deleteById(uID);
     }
     public Account createAccount(Account account) {
-        return accountRepository.save(account);
+        Role defaultRole = new Role(2, "user");
+        account.setRole(defaultRole);
+        String user = account.getUser();
+        Account existingAccount = accountRepository.findByUser(user);
+        if (existingAccount != null) {
+
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tên tài khoản đã tồn tại");
+        } else {
+            return accountRepository.save(account);
+        }
     }
     public Account findByUser(String user) {
         return accountRepository.findByUser(user);
