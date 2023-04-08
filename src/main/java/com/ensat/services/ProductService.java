@@ -32,6 +32,4 @@ public class ProductService {
     public List<Product> findByCategoryId(Integer cID) {
         return repo.findBycID(cID);
     }
-
-
 }

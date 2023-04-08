@@ -42,27 +42,24 @@ public class AccountController {
     @PutMapping("/{uID}")
     public ResponseEntity<?> update(@RequestBody Account account,
                                     @PathVariable Integer uID) {
-        try {
-            Account exitCategory = accountService.get(uID);
-            accountService.save(account);
-            return new ResponseEntity<Product>(HttpStatus.OK);
-        }
-        catch (NoSuchFieldError e) {
-            return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-        }
+        Account exitCategory = accountService.get(uID);
+        if(exitCategory == null)
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        accountService.save(account);
+        return new ResponseEntity<Product>(HttpStatus.OK);
     }
     @DeleteMapping("/delete/{uID}")
-    public  void delete(@PathVariable Integer uID) {
+    public void delete(@PathVariable Integer uID) {
         accountService.delete(uID);
     }
-        @PostMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<Account> register(@RequestBody() Account account) {
-            try {
-                Account newAccount = accountService.createAccount(account);
-                return ResponseEntity.ok(newAccount);
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            }
+        try {
+            Account newAccount = accountService.createAccount(account);
+            return ResponseEntity.ok(newAccount);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
     }
     @PostMapping("/login")
     public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) {

@@ -38,19 +38,25 @@ public class  ProductController {
     public  void add(@RequestBody Product product ) {
         productService.save(product) ;
     }
-    @PutMapping("/update")
-    public ResponseEntity<?> update(@RequestBody Product product,
-                                    @PathVariable Integer pID) {
-        try {
-            Product exitProduct = productService.get(pID);
-            productService.save(product);
-            return new ResponseEntity<Product>(HttpStatus.OK);
+    @PutMapping("/update/{pID}")
+    public ResponseEntity<Product> updateProduct(@PathVariable Integer pID, @RequestBody Product productDetails) {
+        Product product = productService.get(pID);
+        if (product == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        catch (NoSuchFieldError e) {
-            return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-        }
+        product.setName(productDetails.getName());
+        product.setImage(productDetails.getImage());
+        product.setPrice(productDetails.getPrice());
+        product.setTitle(productDetails.getTitle());
+        product.setDescription(productDetails.getDescription());
+        product.setcID(productDetails.getcID());
+        product.setuID(productDetails.getuID());
+        productService.save(product);
+        return new ResponseEntity<>(product, HttpStatus.OK);
     }
-    @DeleteMapping("/delete")
+
+
+    @DeleteMapping("/delete/{pID}")
     public  void delete(@PathVariable Integer pID) {
         productService.delete(pID);
     }

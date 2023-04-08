@@ -1,4 +1,5 @@
 package com.ensat.services;
+
 import com.ensat.entities.Account;
 import com.ensat.entities.Category;
 import com.ensat.entities.Role;
@@ -17,41 +18,45 @@ public class AccountService {
     private AccountRepository accountRepository;
 
     public List<Account> listAll() {
-        return  accountRepository.findAll();
+        return accountRepository.findAll();
     }
-    public void  save (Account account) {
+
+    public void save(Account account) {
         accountRepository.save(account);
     }
-    public  Account get(Integer uID) {
-        return  accountRepository.findById(uID) .get();
+
+    public Account get(Integer uID) {
+        return accountRepository.findById(uID).get();
     }
-    public void  delete ( Integer uID) {
+
+    public void delete(Integer uID) {
         accountRepository.deleteById(uID);
     }
+
     public Account createAccount(Account account) {
         Role defaultRole = new Role(2, "user");
         account.setRole(defaultRole);
         String user = account.getUser();
         Account existingAccount = accountRepository.findByUser(user);
         if (existingAccount != null) {
-
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tên tài khoản đã tồn tại");
-        } else {
-            return accountRepository.save(account);
         }
+        return accountRepository.save(account);
     }
+
     public Account findByUser(String user) {
         return accountRepository.findByUser(user);
     }
+
     public boolean changePassword(Account account, String oldPassword, String newPassword) {
         if (account.getPass().equals(oldPassword)) {
             account.setPass(newPassword);
             accountRepository.save(account);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
+
     public Account findById(Integer uID) {
         return accountRepository.findById(uID).orElse(null);
     }
