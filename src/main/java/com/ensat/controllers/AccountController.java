@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 
@@ -59,22 +61,25 @@ public class AccountController {
             return ResponseEntity.ok(newAccount);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
     @PostMapping("/login")
-    public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) {
-        System.out.println(loginRequest);
-        Account account = accountService.findByUser(loginRequest.getUser());
+    public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        Account account = accountService.findByUser(loginRequest.getUser(), loginRequest.getPass());
         System.out.println(account);
-        if (account != null && account.getPass().equals(loginRequest.getPass())) {
+        if (account != null) {
             account.setPass("");
             return ResponseEntity.ok(account);
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
-    @PutMapping("/changePassword/{uID}") // {uID} xài PathVariable
-    public ResponseEntity<?> changePassword(@PathVariable() Integer uID, @RequestBody PasswordChangeRequest request) {
+    @PutMapping("/changePassword/{uID}")
+    public ResponseEntity<?> changePassword(@PathVariable() Integer uID, @RequestBody PasswordChangeRequest request) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         System.out.println(uID);
         if (uID != null) {
             Account account = accountService.findById(uID);

@@ -19,24 +19,28 @@ import java.util.List;
 public class  ProductController {
     @Autowired
     private ProductService productService ;
+
+    @Autowired
+    private ProductRepository productRepository;
     
     @GetMapping("")
     public ResponseEntity<List<Product>> list() {
         return new ResponseEntity<>(productService.listAll(), HttpStatus.OK);
     }
     @GetMapping("/{pID}")
-    public ResponseEntity<Product> get(@PathVariable Integer pID) {
+    public ResponseEntity<Product>get(@PathVariable Integer pID) {
       try {
           Product product = productService.get(pID);
-          return  new ResponseEntity<>(product, HttpStatus.OK);
+                      return  new ResponseEntity<>(product, HttpStatus.OK);
       } catch (NoSuchFieldError e) {
           return  new  ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
 
     }
     @PostMapping("/add")
-    public  void add(@RequestBody Product product ) {
-        productService.save(product) ;
+    public ResponseEntity<String> add(@RequestBody Product product) {
+        productService.save(product);
+        return new ResponseEntity<>("Product created successfully", HttpStatus.CREATED);
     }
     @PutMapping("/update/{pID}")
     public ResponseEntity<Product> updateProduct(@PathVariable Integer pID, @RequestBody Product productDetails) {
@@ -50,7 +54,6 @@ public class  ProductController {
         product.setTitle(productDetails.getTitle());
         product.setDescription(productDetails.getDescription());
         product.setcID(productDetails.getcID());
-        product.setuID(productDetails.getuID());
         productService.save(product);
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
@@ -59,10 +62,8 @@ public class  ProductController {
     @DeleteMapping("/delete/{pID}")
     public  void delete(@PathVariable Integer pID) {
         productService.delete(pID);
+        System.out.println("Delete complete");
     }
-
-    @Autowired
-    private ProductRepository productRepository;
     @GetMapping("/search") // http://localhost:8083/products/search?name=..
     public ResponseEntity<List<Product>> searchProductsByName(@RequestParam String name) {
         List<Product> products = productRepository.findByNameContainingIgnoreCase(name);

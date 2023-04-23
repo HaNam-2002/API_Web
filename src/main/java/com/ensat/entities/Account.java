@@ -40,43 +40,7 @@ public class Account {
         this.address = address;
     }
 
-    public Integer getuID() {
-        return uID;
-    }
 
-    public void setuID(Integer uID) {
-        this.uID = uID;
-    }
 
-    public String getUser() {
-        return user;
-    }
 
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public Integer getPhone() {
-        return phone;
-    }
-
-    public void setPhone(Integer phone) {
-        this.phone = phone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }

@@ -22,33 +22,29 @@ public class CategoryController {
     public ResponseEntity<Category> get(@PathVariable Integer cID) {
         try {
              Category category = service.get(cID);
-            return  new ResponseEntity<Category>(category, HttpStatus.OK);
+            return new ResponseEntity<>(category, HttpStatus.OK);
         } catch (NoSuchFieldError e) {
-            return  new  ResponseEntity<Category>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-
     }
     @PostMapping("/add")
     public  void add(@RequestBody Category category ) {
         service.save(category) ;
     }
-    @PutMapping("/{cID}")
-    public ResponseEntity<?> update(@RequestBody Category category,
-                                    @PathVariable Integer cID) {
-        try {
-            Category exitCategory = service.get(cID);
-            service.save(category);
-            return new ResponseEntity<Product>(HttpStatus.OK);
-        }
-        catch (NoSuchFieldError e) {
-            return  new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-        }
+@PutMapping("/update/{cID}")
+public ResponseEntity<Category> updateProduct(@PathVariable Integer cID, @RequestBody Category categoryDetails) {
+    Category category = service.get(cID);
+    if (category == null) {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    category.setCname(categoryDetails.getCname());
+
+    return new ResponseEntity<>(category, HttpStatus.OK);
+}
     @DeleteMapping("/delete/{cID}")
     public  void delete(@PathVariable Integer cID) {
         service.delete(cID);
     }
-
     public ResponseEntity<List<Product>>getProductbyCategory(@PathVariable Integer cID) {
         return null;
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public class CategoryService {
 
     @Autowired
-    private CategoryRepository catRepo;
+    private  CategoryRepository catRepo;
     public List<Category> listAll() {
         return  catRepo.findAll();
     }
@@ -20,7 +20,7 @@ public class CategoryService {
         catRepo.save(category);
     }
     public  Category get(Integer cID) {
-        return  catRepo.findById(cID) .get();
+        return  catRepo.findById(cID).orElse(null);
     }
     public void  delete ( Integer cID) {
         catRepo.deleteById(cID);

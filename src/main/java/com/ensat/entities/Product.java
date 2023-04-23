@@ -1,5 +1,6 @@
 package com.ensat.entities;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import javax.persistence.*;
@@ -9,11 +10,10 @@ import java.math.BigDecimal;
  * Product entity.
  */
 @Entity
-@Getter
-@Setter
+@Data
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pID;
     private String name;
     private  String image;
@@ -22,10 +22,8 @@ public class Product {
     private String description;
 
     @Column(name = "cID")
-    private Integer cID;
+    private Integer cID; // khai báo khoá ngoiaj đến categoru: xài @OneToMany, @manytoone j đó
 
-    @Column(name = "uID")
-    private Integer uID;
 
     public  Product() {}
 
@@ -39,7 +37,6 @@ public class Product {
         this.title = title;
         this.description = description;
         this.cID = cID;
-        this.uID = uID;
     }
 
     public Integer getcID() {
@@ -49,62 +46,14 @@ public class Product {
     public void setcID(Integer cID) {
         this.cID = cID;
     }
-
-    public Integer getuID() {
-        return uID;
-    }
-
-    public void setuID(Integer uID) {
-        this.uID = uID;
-    }
-
     public Integer getpID() {
         return pID;
     }
-
     public void setpID(Integer pID) {
         this.pID = pID;
     }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
 
 }
