@@ -29,10 +29,10 @@ public class ProductService {
         repo.deleteById(pID);
     }
 
-    public List<Product> findByCategoryId(Integer cID) {
-        return repo.findBycID(cID);
+    public List<Product> findProductBycCategoryId(Integer cID) {
+        return repo.findProductBycCategoryId(cID);
     }
-    public Product getProductById(Integer pID) {
-        return repo.findById(pID).orElse(null);
+    public List<Product> findByName(String name) {
+        return this.repo.findByNameContainingIgnoreCase(name);
     }
 }

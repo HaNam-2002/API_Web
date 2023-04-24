@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByNameContainingIgnoreCase(String name);
 
-    List<Product> findBycID(Integer cID);
+    @Query(value = "select * from product where cID = :cID", nativeQuery = true)
+    List<Product> findProductBycCategoryId(Integer cID);
 
 }

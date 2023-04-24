@@ -1,8 +1,7 @@
 package com.ensat.entities;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -11,50 +10,20 @@ import java.math.BigDecimal;
  */
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer pID;
     private String name;
     private  String image;
-    private BigDecimal price;
+    private BigDecimal price; // xem lại kiểu dữ liệu thử có cần dùng BigDecimal không :v Int là đủ :v -> 2^32  2 tỷ 1
     private String title;
     private String description;
 
-    @Column(name = "cID")
-    private Integer cID; // khai báo khoá ngoiaj đến categoru: xài @OneToMany, @manytoone j đó
-
-
-    public  Product() {}
-
-
-
-    public Product(Integer pID, String name, String image, BigDecimal price, String title, String description, Integer cID, Integer uID) {
-        this.pID = pID;
-        this.name = name;
-        this.image = image;
-        this.price = price;
-        this.title = title;
-        this.description = description;
-        this.cID = cID;
-    }
-
-    public Integer getcID() {
-        return cID;
-    }
-
-    public void setcID(Integer cID) {
-        this.cID = cID;
-    }
-    public Integer getpID() {
-        return pID;
-    }
-    public void setpID(Integer pID) {
-        this.pID = pID;
-    }
-
-
-
-
+    @ManyToOne(targetEntity = Category.class)
+    @JoinColumn(name = "cID")
+    private Category category;
 }
 
