@@ -1,8 +1,14 @@
 package com.ensat.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Data
 public class Cart {
@@ -13,19 +19,11 @@ public class Cart {
 
     @OneToOne
     @JoinColumn(name = "uID")
+    @JsonIgnore
     private Account account;
 
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
-
-    public Cart(Integer cartId, Account account, List<CartItem> cartItems) {
-        this.cartId = cartId;
-        this.account = account;
-        this.cartItems = cartItems;
-    }
-    public  Cart() {
-
-    }
 
 
 }

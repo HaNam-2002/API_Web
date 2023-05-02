@@ -35,6 +35,7 @@ public class CategoryController {
     @PostMapping("/add")
     public ResponseEntity<Category> add(@RequestBody Category category) {
         Category categoryNew = service.save(category);
+        System.out.println("Thêm thành công");
         return new ResponseEntity<>(categoryNew, HttpStatus.OK);
     }
 
@@ -45,13 +46,17 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         category.setCname(categoryDetails.getCname());
+        service.save(category);
+        System.out.println("Update thành công");
 
         return new ResponseEntity<>(category, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{cID}")
-    public void delete(@PathVariable Integer cID) {
+    public   ResponseEntity<Category> delete(@PathVariable Integer cID) {
         service.delete(cID);
+        System.out.println("Delete complete");
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public ResponseEntity<List<Product>> getProductbyCategory(@PathVariable Integer cID) {

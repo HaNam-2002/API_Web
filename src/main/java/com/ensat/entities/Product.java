@@ -18,7 +18,7 @@ public class Product {
     private Integer pID;
     private String name;
     private  String image;
-    private BigDecimal price; // xem lại kiểu dữ liệu thử có cần dùng BigDecimal không :v Int là đủ :v -> 2^32  2 tỷ 1
+    private BigDecimal price;
     private String title;
     private String description;
 
