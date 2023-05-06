@@ -2,10 +2,8 @@ package com.ensat.services;
 
 import com.ensat.Security.PasswordEncoder;
 import com.ensat.entities.Account;
-import com.ensat.entities.Infomation;
 import com.ensat.entities.Role;
 import com.ensat.repositories.AccountRepository;
-import com.ensat.repositories.InfomationRepoitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -21,7 +19,6 @@ public class AccountService {
     private AccountRepository accountRepository;
     private PasswordEncoder passwordEncoder;
 
-    private InfomationService infomationService;
 
     public List<Account> listAll() {
         return accountRepository.findAll();
@@ -49,9 +46,6 @@ public class AccountService {
         }
         account.setPass(passwordEncoder.encode(account.getPass()));
         Account newAccount = accountRepository.save(account);
-        Infomation infomation = new Infomation();
-        infomation.setUID(newAccount);
-        infomationService.save(infomation);
         return newAccount;
     }
 
