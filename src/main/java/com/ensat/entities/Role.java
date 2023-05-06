@@ -1,23 +1,17 @@
 package com.ensat.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
 @Entity
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role {
     @Id
     private Integer rID;
     private String roleName;
-    public Role() {}
-    public Role(Integer rID, String roleName) {
-        this.rID = rID;
-        this.roleName = roleName;
-    }
 
     public Integer getrID() {
         return rID;

@@ -70,7 +70,7 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<Account> login(@RequestBody() LoginRequest loginRequest) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         Account account = accountService.findByUser(loginRequest.getUser(), loginRequest.getPass());
-        System.out.println(account);
+
         if (account != null) {
             account.setPass("");
             return ResponseEntity.ok(account);
@@ -78,6 +78,7 @@ public class AccountController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+
     @PutMapping("/changePassword/{uID}")
     public ResponseEntity<?> changePassword(@PathVariable() Integer uID, @RequestBody PasswordChangeRequest request) throws UnsupportedEncodingException, NoSuchAlgorithmException {
         System.out.println(uID);

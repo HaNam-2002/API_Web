@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,4 +36,12 @@ public class ProductService {
     public List<Product> findByName(String name) {
         return this.repo.findByNameContainingIgnoreCase(name);
     }
+    public Product getProductById(Integer pID) {
+        Optional<Product> optionalProduct = repo.findById(pID);
+        if (optionalProduct.isPresent()) {
+            return optionalProduct.get();
+        }
+        else { return null; }
+    }
 }
+

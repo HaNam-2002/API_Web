@@ -2,12 +2,14 @@ package com.ensat.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,30 +19,22 @@ public class Account {
 
     private String pass;
 
-    private Integer phone;
+    private String name ;
+    private  String phone ;
 
-    private String address;
-
+    private  String address;
+    private String gmail;
     @ManyToOne
     @JoinColumn(name = "rID")
     private Role role;
     public void setRole(Role role) {
         this.role = role;
     }
-
     public Role getRole() {
         return role;
     }
-
-    public  Account() {}
-    public Account(String user, String pass, Integer phone, String address) {
-        this.user = user;
-        this.pass = pass;
-        this.phone = phone;
-        this.address = address;
+    public void setrID(Integer rID) {
+        this.role.setrID(rID);
     }
-
-
-
 
 }

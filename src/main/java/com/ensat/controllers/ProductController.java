@@ -36,7 +36,7 @@ public class ProductController {
         return new ResponseEntity<>(product, HttpStatus.OK);
     }
 
-    @PostMapping("/add") // add đã a :))
+    @PostMapping("/add")
     public ResponseEntity<String> add(@RequestParam Integer cID, @RequestBody Product product) {
         Category category = this.categoryService.get(cID);
         product.setCategory(category);

@@ -11,15 +11,24 @@ CREATE TABLE Account(
 uID INT AUTO_INCREMENT PRIMARY KEY,
 `user` VARCHAR(255) NULL,
 pass VARCHAR(255) NULL,
-phone INT NULL,
-address VARCHAR(255) NULL,
 rID INT NOT NULL ,
 FOREIGN KEY (rID) REFERENCES Role(rID) ON DELETE CASCADE ON UPDATE CASCADE
 );
+CREATE TABLE infomation (
+  iID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  uID int NOT NULL,
+  name varchar(50) DEFAULT NULL,
+  phone varchar(15) DEFAULT NULL,
+  address varchar(200) DEFAULT NULL,
+  gmail varchar(50) DEFAULT NULL,
+  UNIQUE KEY (uID,iID),
+  CONSTRAINT infomation FOREIGN KEY (uID) REFERENCES account (uID) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 
 
 CREATE TABLE Category(
-cID INT NOT NULL PRIMARY KEY,
+cID INT  AUTO_INCREMENT NOT NULL PRIMARY KEY,
 cname VARCHAR(50) NOT NULL
 );
 
@@ -31,15 +40,13 @@ price DECIMAL(10,2) NULL,
 title VARCHAR(300) NULL,
 description VARCHAR(1000) NULL,
 cID INT NULL,
-
-
 FOREIGN KEY (cID) REFERENCES Category(cID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Cart(
     CartID INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
     uID INT NOT NULL,
-    total DECIMAL(10,2),
+    totalPrice decimal(10,2) DEFAULT NULL,
     FOREIGN KEY (uID) REFERENCES Account(uID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -52,20 +59,32 @@ CREATE TABLE CartItem(
     FOREIGN KEY (CartID) REFERENCES Cart(CartID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
+
 INSERT INTO Role (rID, roleName) VALUES 
 (1,'admin'),
 (2,'guest');
 
-INSERT INTO Account (`user`, pass, phone, address, rID) VALUES 
-('Nam', MD5('1'), null, null, 1),
-('Minh', MD5('0'), '0931832732', '2 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng', 2), 
-('Vy', MD5('0'), '0314283732', '1 Hàm Nghi, Cẩm Lê, Đà Nẵng', 2), 
-('Khach1', MD5('0'), '0931832732', '187 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng', 2), 
-('Khach2', MD5('0'), '0231832732', '17 Hải Phòng, Hải Châu, Đà Nẵng', 2), 
-('Khach3', MD5('0'), '0345673231', '154 Đê La Thành, Ba Đình, Hà Nội', 2), 
-('Khach4', MD5('0'), '0324327323', '99 Thế Lữ, Sơn Trà, Đà Nẵng', 2), 
-('Khach5', MD5('0'), '0124573234', '99 Thế Lữ, Sơn Trà, Đà Nẵng', 2), 
-('Khach6', MD5('0'), '0434131297', '100 nguyễn chí thanh, Hải Châu, Đà Nẵng', 2);
+INSERT INTO Account (user, pass, rID) VALUES
+('Nam', MD5('1'), 1),
+('Minh', MD5('0'), 2),
+('Vy', MD5('0'), 2),
+('Khach1', MD5('0'), 2),
+('Khach2', MD5('0'), 2),
+('Khach3', MD5('0'), 2),
+('Khach4', MD5('0'), 2),
+('Khach5', MD5('0'), 2),
+('Khach6', MD5('0'), 2);
+
+INSERT INTO infomation (uID, name, phone, address, gmail)
+VALUES 
+(2, 'Nguyễn Văn A', '0901234567', '123 Đường số 1, Quận 1, TP.HCM', 'vana@gmail.com'),
+(3, 'Trần Thị B', '0912345678', '456 Đường số 2, Quận 2, TP.HCM', 'thib@gmail.com'),
+(4, 'Lê Văn C', '0923456789', '789 Đường số 3, Quận 3, TP.HCM', 'lec@gmail.com'),
+(5, 'Phạm Thị D', '0934567890', '1011 Đường số 4, Quận 4, TP.HCM', 'thid@gmail.com'),
+(6, 'Hoàng Văn E', '0945678901', '1213 Đường số 5, Quận 5, TP.HCM', 'vane@gmail.com'),
+(7, 'Nguyễn Thị F', '0956789012', '1415 Đường số 6, Quận 6, TP.HCM', 'thif@gmail.com'),
+(8, 'Trần Văn G', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vang@gmail.com');
+
 
 
 INSERT INTO Category (cID, cname) VALUES 
@@ -78,7 +97,7 @@ INSERT INTO Category (cID, cname) VALUES
 
 
 SET FOREIGN_KEY_CHECKS=0;
-SET FOREIGN_KEY_CHECKS=1;
+
 
 INSERT INTO product (name, image, price, title, description, cID) VALUES
 ('Iphone 13', 'https://cdn.tgdd.vn/Products/Images/42/223602/iphone-13-starlight-1-600x600.jpg', 100.0000, 'Đỉnh cao thời thượng', 'Hiệu năng vượt trội - Chip Apple A15 Bionic mạnh mẽ. Hỗ trợ mạng 5G tốc độ cao. Không gian hiển thị sống động - Màn hình 6.7" Super Retina XDR độ sáng cao, sắc nét. Trải nghiệm điện ảnh đỉnh cao - Cụm 3 camera kép 12MP, hỗ trợ ổn định hình ảnh quang học. ', 1),

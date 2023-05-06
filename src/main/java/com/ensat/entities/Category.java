@@ -21,6 +21,6 @@ public class Category {
     private  String cname;
 
     @OneToMany(mappedBy = "category")
-    @JsonIgnore // tham khảo thêm JsonBackReferences, JsonManagerReferences
+    @JsonIgnore
     private List<Product> products;
 }
