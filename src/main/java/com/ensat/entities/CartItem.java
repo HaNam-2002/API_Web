@@ -29,6 +29,4 @@ public class CartItem {
 
     @Column(name = "amount")
     private Integer amount;
-
-
 }

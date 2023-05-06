@@ -15,14 +15,12 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartID")
     private Integer cartId;
     @OneToOne
     @JoinColumn(name = "uID")
     @JsonIgnore
     private Account account;
-    @Column(name = "totalPrice")
-    private BigDecimal totalPrice;
+    private Double totalPrice;
     @OneToMany(mappedBy = "cart")
     private List<CartItem> cartItems;
 }

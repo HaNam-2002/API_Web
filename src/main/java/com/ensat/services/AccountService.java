@@ -28,6 +28,10 @@ public class AccountService {
         accountRepository.save(account);
     }
 
+    public Integer update(Account account) {
+        return accountRepository.update(account.getUID(), account.getName(), account.getPhone(), account.getAddress(), account.getGmail());
+    }
+
     public Account get(Integer uID) {
         return accountRepository.findById(uID).get();
     }
@@ -51,16 +55,17 @@ public class AccountService {
 
 
     public Account findByUser(String user, String pass) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-    Account account = accountRepository.findByUser(user);
-    if (account != null) {
-        if (passwordEncoder.encode(pass).equals(account.getPass())) {
-            Integer rID = account.getRole().getrID();
-            account.setrID(rID);
-            return account;
+        Account account = accountRepository.findByUser(user);
+        if (account != null) {
+            if (passwordEncoder.encode(pass).equals(account.getPass())) {
+                Integer rID = account.getRole().getrID();
+                account.setrID(rID);
+                return account;
+            }
         }
+        return null;
     }
-    return null;
-}
+
     public boolean changePassword(Account account, String oldPassword, String newPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         if (passwordEncoder.encode(oldPassword).equals(account.getPass())) {
             account.setPass(passwordEncoder.encode(newPassword));
@@ -69,6 +74,7 @@ public class AccountService {
         }
         return false;
     }
+
     public Account findById(Integer uID) {
         return accountRepository.findById(uID).orElse(null);
     }

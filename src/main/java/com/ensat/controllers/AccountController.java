@@ -23,6 +23,7 @@ import java.util.List;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+
     @GetMapping("/all")
     public ResponseEntity<List<Account>> list() {
         return new ResponseEntity<>(accountService.listAll(), HttpStatus.OK);
@@ -35,25 +36,33 @@ public class AccountController {
         } catch (NoSuchFieldError e) {
             return  new  ResponseEntity<Account>(HttpStatus.NOT_FOUND);
         }
-
     }
+
     @PostMapping("/add")
     public  void add(@RequestBody Account account ) {
         accountService.save(account) ;
     }
-    @PutMapping("/{uID}")
+
+    @PutMapping("/update/{uID}")
     public ResponseEntity<?> update(@RequestBody Account account,
                                     @PathVariable Integer uID) {
-        Account exitCategory = accountService.get(uID);
-        if(exitCategory == null)
+        Account existingAccount = accountService.get(uID);
+        if(existingAccount == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        accountService.save(account);
-        return new ResponseEntity<Product>(HttpStatus.OK);
+        account.setUID(uID);
+        // cái hàm update nó sẽ trả về số hàng bị ảnh hưởng, sửa uID thì sẽ sửa 1 thằng á nên nó sẽ == 1
+        // nếu k dòng nào ảnh hưởng thì sẽ là 0
+        // nhác thì khỏi cần quan tâm :v ko lỗi là đc :v oke hiểu r
+        if(accountService.update(account) == 1) {
+            return new ResponseEntity<Account>(HttpStatus.OK);
+        }
+        return new ResponseEntity<Account>(HttpStatus.BAD_REQUEST);
     }
     @DeleteMapping("/delete/{uID}")
     public void delete(@PathVariable Integer uID) {
         accountService.delete(uID);
     }
+
     @PostMapping("/register")
     public ResponseEntity<Account> register(@RequestBody() Account account) {
         try {
@@ -61,9 +70,7 @@ public class AccountController {
             return ResponseEntity.ok(newAccount);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchAlgorithmException e) {
+        } catch (UnsupportedEncodingException | NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
     }

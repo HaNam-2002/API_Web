@@ -19,22 +19,29 @@ public class Account {
 
     private String pass;
 
-    private String name ;
-    private  String phone ;
+    private String name;
+    private String phone;
 
-    private  String address;
+    private String address;
     private String gmail;
     @ManyToOne
     @JoinColumn(name = "rID")
     private Role role;
+
     public void setRole(Role role) {
         this.role = role;
     }
+
     public Role getRole() {
         return role;
     }
+
     public void setrID(Integer rID) {
         this.role.setrID(rID);
+    }
+
+    public Role getrID() {
+        return role;
     }
 
 }
