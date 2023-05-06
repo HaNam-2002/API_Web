@@ -50,9 +50,6 @@ public class AccountController {
         if(existingAccount == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         account.setUID(uID);
-        // cái hàm update nó sẽ trả về số hàng bị ảnh hưởng, sửa uID thì sẽ sửa 1 thằng á nên nó sẽ == 1
-        // nếu k dòng nào ảnh hưởng thì sẽ là 0
-        // nhác thì khỏi cần quan tâm :v ko lỗi là đc :v oke hiểu r
         if(accountService.update(account) == 1) {
             return new ResponseEntity<Account>(HttpStatus.OK);
         }

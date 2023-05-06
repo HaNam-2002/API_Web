@@ -9,22 +9,15 @@ roleName VARCHAR(255) NOT NULL
 
 CREATE TABLE Account(
 uID INT AUTO_INCREMENT PRIMARY KEY,
-`user` VARCHAR(255) NULL,
-pass VARCHAR(255) NULL,
+`user` VARCHAR(255) not NULL,
+pass VARCHAR(255) not NULL,
+name varchar(50) DEFAULT NULL,
+phone varchar(15) DEFAULT NULL,
+address varchar(200) DEFAULT NULL,
+gmail varchar(50) DEFAULT NULL,
 rID INT NOT NULL ,
 FOREIGN KEY (rID) REFERENCES Role(rID) ON DELETE CASCADE ON UPDATE CASCADE
 );
-CREATE TABLE infomation (
-  iID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  uID int NOT NULL,
-  name varchar(50) DEFAULT NULL,
-  phone varchar(15) DEFAULT NULL,
-  address varchar(200) DEFAULT NULL,
-  gmail varchar(50) DEFAULT NULL,
-  UNIQUE KEY (uID,iID),
-  CONSTRAINT infomation FOREIGN KEY (uID) REFERENCES account (uID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
 
 
 CREATE TABLE Category(
@@ -64,26 +57,18 @@ INSERT INTO Role (rID, roleName) VALUES
 (1,'admin'),
 (2,'guest');
 
-INSERT INTO Account (user, pass, rID) VALUES
-('Nam', MD5('1'), 1),
-('Minh', MD5('0'), 2),
-('Vy', MD5('0'), 2),
-('Khach1', MD5('0'), 2),
-('Khach2', MD5('0'), 2),
-('Khach3', MD5('0'), 2),
-('Khach4', MD5('0'), 2),
-('Khach5', MD5('0'), 2),
-('Khach6', MD5('0'), 2);
+INSERT INTO Account (user, pass, name, phone, address, gmail,rID) VALUES
+('Nam', MD5('1'), 'Nguyễn Văn A', '0901234567', '123 Đường số 1, Quận 1, TP.HCM', 'vana@gmail.com', 1),
+('Minh', MD5('0'),'Trần Thị B', '0912345678', '456 Đường số 2, Quận 2, TP.HCM', 'thib@gmail.com', 2),
+('Vy', MD5('0'), 'Phạm Thị D', '0934567890', '1011 Đường số 4, Quận 4, TP.HCM', 'thid@gmail.com',2 ),
+('Khach1', MD5('0'), 'Lê Văn C', '0923456789', '789 Đường số 3, Quận 3, TP.HCM', 'lec@gmail.com',2),
+('Khach2', MD5('0'),'Hoàng Văn E', '0945678901', '1213 Đường số 5, Quận 5, TP.HCM', 'vane@gmail.com', 2),
+('Khach3', MD5('0'),'Nguyễn Thị F', '0956789012', '1415 Đường số 6, Quận 6, TP.HCM', 'thif@gmail.com', 2),
+('Khach4', MD5('0'),'Trần Văn G', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vang@gmail.com', 2),
+('Khach5', MD5('0'),'Vũ Văn F', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vanF@gmail.com',2),
+('Khach6', MD5('0'),'Trần Thị Trùn', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'trun@gmail.com', 2);
 
-INSERT INTO infomation (uID, name, phone, address, gmail)
-VALUES 
-(2, 'Nguyễn Văn A', '0901234567', '123 Đường số 1, Quận 1, TP.HCM', 'vana@gmail.com'),
-(3, 'Trần Thị B', '0912345678', '456 Đường số 2, Quận 2, TP.HCM', 'thib@gmail.com'),
-(4, 'Lê Văn C', '0923456789', '789 Đường số 3, Quận 3, TP.HCM', 'lec@gmail.com'),
-(5, 'Phạm Thị D', '0934567890', '1011 Đường số 4, Quận 4, TP.HCM', 'thid@gmail.com'),
-(6, 'Hoàng Văn E', '0945678901', '1213 Đường số 5, Quận 5, TP.HCM', 'vane@gmail.com'),
-(7, 'Nguyễn Thị F', '0956789012', '1415 Đường số 6, Quận 6, TP.HCM', 'thif@gmail.com'),
-(8, 'Trần Văn G', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vang@gmail.com');
+
 
 
 
