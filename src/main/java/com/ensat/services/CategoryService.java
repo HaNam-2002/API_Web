@@ -28,7 +28,6 @@ public class CategoryService {
     }
 
     public void delete(Integer cID) {
-
         catRepo.deleteById(cID);
     }
 }

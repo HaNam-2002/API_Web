@@ -46,6 +46,7 @@ public class CategoryController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         category.setCname(categoryDetails.getCname());
+        category.setCimage(categoryDetails.getCimage());
         service.save(category);
         System.out.println("Update thành công");
 

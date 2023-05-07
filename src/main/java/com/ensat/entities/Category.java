@@ -19,6 +19,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cID ;
     private  String cname;
+    private  String cimage;
 
     @OneToMany(mappedBy = "category")
     @JsonIgnore
