@@ -1,4 +1,4 @@
-﻿CREATE DATABASE SELLPHONE;
+CREATE DATABASE SELLPHONE;
 USE SELLPHONE;
 
 
@@ -9,20 +9,14 @@ roleName VARCHAR(255) NOT NULL
 
 CREATE TABLE Account(
 uID INT AUTO_INCREMENT PRIMARY KEY,
-`user` VARCHAR(255) NULL,
-pass VARCHAR(255) NULL,
+`user` VARCHAR(255) not NULL,
+pass VARCHAR(255) not NULL,
+name varchar(50) DEFAULT NULL,
+phone varchar(15) DEFAULT NULL,
+address varchar(200) DEFAULT NULL,
+gmail varchar(50) DEFAULT NULL,
 rID INT NOT NULL ,
 FOREIGN KEY (rID) REFERENCES Role(rID) ON DELETE CASCADE ON UPDATE CASCADE
-);
-CREATE TABLE infomation (
-  iID int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  uID int NOT NULL,
-  name varchar(50) DEFAULT NULL,
-  phone varchar(15) DEFAULT NULL,
-  address varchar(200) DEFAULT NULL,
-  gmail varchar(50) DEFAULT NULL,
-  UNIQUE KEY (uID,iID),
-  CONSTRAINT infomation FOREIGN KEY (uID) REFERENCES account (uID) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 
@@ -65,26 +59,18 @@ INSERT INTO Role (rID, roleName) VALUES
 (1,'admin'),
 (2,'guest');
 
-INSERT INTO Account (user, pass, rID) VALUES
-('Nam', MD5('1'), 1),
-('Minh', MD5('0'), 2),
-('Vy', MD5('0'), 2),
-('Khach1', MD5('0'), 2),
-('Khach2', MD5('0'), 2),
-('Khach3', MD5('0'), 2),
-('Khach4', MD5('0'), 2),
-('Khach5', MD5('0'), 2),
-('Khach6', MD5('0'), 2);
+INSERT INTO Account (user, pass, name, phone, address, gmail,rID) VALUES
+('Nam', MD5('1'), 'Nguyễn Văn A', '0901234567', '123 Đường số 1, Quận 1, TP.HCM', 'vana@gmail.com', 1),
+('Minh', MD5('0'),'Trần Thị B', '0912345678', '456 Đường số 2, Quận 2, TP.HCM', 'thib@gmail.com', 2),
+('Vy', MD5('0'), 'Phạm Thị D', '0934567890', '1011 Đường số 4, Quận 4, TP.HCM', 'thid@gmail.com',2 ),
+('Khach1', MD5('0'), 'Lê Văn C', '0923456789', '789 Đường số 3, Quận 3, TP.HCM', 'lec@gmail.com',2),
+('Khach2', MD5('0'),'Hoàng Văn E', '0945678901', '1213 Đường số 5, Quận 5, TP.HCM', 'vane@gmail.com', 2),
+('Khach3', MD5('0'),'Nguyễn Thị F', '0956789012', '1415 Đường số 6, Quận 6, TP.HCM', 'thif@gmail.com', 2),
+('Khach4', MD5('0'),'Trần Văn G', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vang@gmail.com', 2),
+('Khach5', MD5('0'),'Vũ Văn F', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vanF@gmail.com',2),
+('Khach6', MD5('0'),'Trần Thị Trùn', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'trun@gmail.com', 2);
 
-INSERT INTO infomation (uID, name, phone, address, gmail)
-VALUES 
-(2, 'Nguyễn Văn A', '0901234567', '123 Đường số 1, Quận 1, TP.HCM', 'vana@gmail.com'),
-(3, 'Trần Thị B', '0912345678', '456 Đường số 2, Quận 2, TP.HCM', 'thib@gmail.com'),
-(4, 'Lê Văn C', '0923456789', '789 Đường số 3, Quận 3, TP.HCM', 'lec@gmail.com'),
-(5, 'Phạm Thị D', '0934567890', '1011 Đường số 4, Quận 4, TP.HCM', 'thid@gmail.com'),
-(6, 'Hoàng Văn E', '0945678901', '1213 Đường số 5, Quận 5, TP.HCM', 'vane@gmail.com'),
-(7, 'Nguyễn Thị F', '0956789012', '1415 Đường số 6, Quận 6, TP.HCM', 'thif@gmail.com'),
-(8, 'Trần Văn G', '0967890123', '1617 Đường số 7, Quận 7, TP.HCM', 'vang@gmail.com');
+
 
 
 
@@ -110,9 +96,13 @@ INSERT INTO product (name, image, price, title, description, cID) VALUES
 ('Xiaomi Redmi Note 11', 'https://cdn.tgdd.vn/Products/Images/42/279066/xiaomi-12t-pro-thumb-bac-1-600x600.jpg', 150.000, 'Sinh ra để chơi game', 'Nâng cao trải nghiệm thị giác - Màn hình AMOLED 6.43"" Full HD+, công nghệ DotDisplay. Thoải mái sử dụng không lắng lo - Viên pin 5000 mAh, sạc nhanh 33 W. Hiệu năng ấn tượng - Snapdragon 680 8 nhân cùng RAM 4GB, bộ nhớ 64GB.', 1),
 ( 'Xiaomi 12 Pro', 'https://cdn.tgdd.vn/Products/Images/42/234621/Xiaomi-12-xam-thumb-mau-600x600.jpg', 160.0000, 'Sạc siêu nhanh chưa đầy 15p',' Kiến tạo siêu khoảnh khắc - Hệ thống camera 200MP, chống rung quang học OIS và ống kính 8P.  Thiết kế siêu việt - Trọn vẻ đẹp sang trọng, đẳng cấp, vỏ nhám chống bám vân tay, khung kim loại cứng cáp, độc đáo.  Năng lượng bất tận, khám phá cả ngày - Dung lượng pin 5000mAh, sạc siêu nhanh HyperCharge 120W. ', 2),
 ( 'Iphone 12 Mini', 'https://cdn.tgdd.vn/Products/Images/42/228742/iphone-12-mini-do-600x600.jpeg', 170.0000, 'Hiệu năng cực đỉnh ',' Mạnh mẽ, siêu nhanh với chip A14, RAM 6GB, mạng 5G tốc độ cao.  Bền bỉ vượt trội - Kháng nước, kháng bụi IP68, mặt lưng Ceramic Shield.  Chụp ảnh siêu đỉnh - Night Mode , thuật toán Deep Fusion, Smart HDR 3, camera LiDar. ', 1),
-( 'OPPO Reno 8 Pro', 'https://cdn.tgdd.vn/Products/Images/42/260546/oppo-reno8-pro-thumb-xanh-1-600x600.jpg', 150.0000,'Gấp đôi hiệu suất ', ' Chuyên gia chân dung, bừng sáng khoảnh khắc đêm - Cụm camera 64MP + 2MP + 2MP hiện đại.  Sạc nhanh siêu tốc, tràn đầy năng lượng cho cả ngày - Viên pin 4500mAh, Sạc nhanh siêu tốc 33W.  Gấp đôi hiệu suất, xử lí mọi tác vụ - Con chip Qualcomm Snapdragon 680 mạnh mẽ trong phân khúc. ', 4),
-( 'SamSung Galaxy A23 (99%) ', 'https://cdn.tgdd.vn/Products/Images/42/262650/samsung-galaxy-a23-cam-thumb-600x600.jpg', 180.0000,'Trả góp 0%', ' Nâng cao trải nghiệm với màn hình chất lượng - Màn hình LCD 6.6 inch Full HD+.  Hiệu năng ấn tượng mạnh mẽ - Snapdragon 680 (SM6225), RAM dung lượng 4GB.  Pin dung lượng 5000mAh, sạc nhanh ấn tượng - 5.000 mAh, sạc nhanh 25W. ', 3),
-( 'SamSumGalaxyZ (99%) ', 'https://cdn.tgdd.vn/Products/Images/42/250625/samsung-galaxy-z-fold4-kem-256gb-600x600.jpg', 100.0000,'Trả góp 0%', ' Camera mắt thần bóng đêm cho trải nghiệm chụp ảnh ấn tượng - Camera chính: 50MP.  Khai mở trải nghiệm di động linh hoạt biến hóa - Màn hình ngoài 6.2"" cùng màn hình chính 7.6"" độc đáo.  Viên pin ấn tượng, sạc nhanh tức tốc - Pin 4,400 mAh, sạc nhanh 25 W. ', 4);
+ ( 'OPPO Reno 8 Pro', 'https://cdn.tgdd.vn/Products/Images/42/260546/oppo-reno8-pro-thumb-xanh-1-600x600.jpg', 150.0000,'Gấp đôi hiệu suất ', ' Chuyên gia chân dung, bừng sáng khoảnh khắc đêm - Cụm camera 64MP + 2MP + 2MP hiện đại.  Sạc nhanh siêu tốc, tràn đầy năng lượng cho cả ngày - Viên pin 4500mAh, Sạc nhanh siêu tốc 33W.  Gấp đôi hiệu suất, xử lí mọi tác vụ - Con chip Qualcomm Snapdragon 680 mạnh mẽ trong phân khúc. ', 4),
+ ( 'SamSung Galaxy A23 (99%) ', 'https://cdn.tgdd.vn/Products/Images/42/262650/samsung-galaxy-a23-cam-thumb-600x600.jpg', 180.0000,'Trả góp 0%', ' Nâng cao trải nghiệm với màn hình chất lượng - Màn hình LCD 6.6 inch Full HD+.  Hiệu năng ấn tượng mạnh mẽ - Snapdragon 680 (SM6225), RAM dung lượng 4GB.  Pin dung lượng 5000mAh, sạc nhanh ấn tượng - 5.000 mAh, sạc nhanh 25W. ', 3),
+ ( 'SamSumGalaxyZ (99%) ', 'https://cdn.tgdd.vn/Products/Images/42/250625/samsung-galaxy-z-fold4-kem-256gb-600x600.jpg', 100.0000,'Trả góp 0%', ' Camera mắt thần bóng đêm cho trải nghiệm chụp ảnh ấn tượng - Camera chính: 50MP.  Khai mở trải nghiệm di động linh hoạt biến hóa - Màn hình ngoài 6.2"" cùng màn hình chính 7.6"" độc đáo.  Viên pin ấn tượng, sạc nhanh tức tốc - Pin 4,400 mAh, sạc nhanh 25 W. ', 4),
+ ( 'Dây Cáp 30-Pin Cho iP/iPd 2 3 4', 'https://cf.shopee.vn/file/c727ae93a663ad79d309254fcafba4b0', 90.0000, 'Sạc đến 5000mah', 'Sử dụng sạc và truyền dữ liệu. Tương thích cho các dòng dùng chuẩn 30-pin. Chiều dài: 1m',5),
+( 'Cáp Type C - Type C 2m Xmobile TCS2000', 'https://cdn.tgdd.vn/Products/Images/58/258245/cap-type-c-type-c-2m-xmobile-tcs2000-thumb-600x600.jpeg',180.0000,'Tận 2 cổng sạc', 'Dây có độ dài 2 m dễ quấn lại và mang theo đến bất kỳ nơi nào. Dòng sạc tối đa 100 W giúp nạp pin cho thiết bị nhanh chóng. Trang bị 2 jack cắm Type-C sử dụng được với các thiết bị có cổng Type-C phù hợp. ',5),
+ ( 'BỘ CỦ CÁP SẠC SIÊU NHANH 45W DÀNH CHO SAMSUNG', 'https://salt.tikicdn.com/cache/600x600/ts/product/1a/ad/d7/b76808ef97432f364440508ca58cd98e.jpg',180.0000,'Giá rẻ tiện lợi ', 'Thiết kế gọn nhẹ, phù hợp khi di chuyển. Kèm theo cáp USB-C cho khả năng sạc nhanh với nguồn điện ra. ',5);
+
 
 
 
